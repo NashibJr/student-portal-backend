@@ -1,16 +1,15 @@
+import JWT from "jsonwebtoken";
 import Administrator from "../models/administartor.js";
 import * as bcrypt from "bcrypt";
 
 const AdminService = {
+  // registering administrators.
   registerAdmin: async (data) => {
     try {
       //check if the administrator already exists on the database
 
-      const { username, email } = data;
-      const exists = await Administrator.findOne(
-        { username: username },
-        { email: email }
-      );
+      const { username } = data;
+      const exists = await Administrator.findOne({ username: username });
       // if the admin exists, deny them to be created again
       if (exists) {
         return {
@@ -39,6 +38,41 @@ const AdminService = {
         message: error.message,
       };
     }
+  },
+
+  // logging in admnistrators
+  login: async (credentials) => {
+    // check if the admin exists on the database
+    const { username, email } = credentials;
+    let admin = await Administrator.findOne({ username: username });
+
+    // if the admin doesnt exist, we let them know.
+    if (!admin) {
+      return {
+        message: "Admin not found, check your username amd try again",
+      };
+    }
+    // otherwise we check if they have provided the righ credentials.
+
+    const checkedAdmin = await bcrypt.compare(
+      credentials.password,
+      admin.password
+    );
+    if (!checkedAdmin) {
+      return {
+        message: "Wrong password of username is submitted.",
+      };
+    }
+    // otherwise we generate a token for them.
+
+    const token = JWT.sign({ username, email }, process.env.JWT_TOKEN_CONFIG, {
+      expiresIn: "24h",
+    });
+    admin = admin.toJSON();
+    // remove the password
+    delete admin.password;
+    // return the checked admin and their tokens.
+    return { ...admin, token: token };
   },
 };
 
