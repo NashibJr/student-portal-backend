@@ -74,6 +74,49 @@ const AdminService = {
     // return the checked admin and their tokens.
     return { ...admin, token: token };
   },
+
+  // deleting administrators
+  delete: async (adminId) => {
+    try {
+      // find the administrator by their Ids amd then delete them.
+      await Administrator.findByIdAndDelete(adminId);
+      // return a message on a successful delete operation.
+      return {
+        message: "successfully deleted",
+      };
+    } catch (error) {
+      // incase an error occurs, we display this message.
+      return {
+        message: "Failed to delete admin",
+      };
+    }
+  },
+
+  //update admin
+  updateAdmin: async (adminId, userdata) => {
+    try {
+      const { username, email, password } = userdata;
+      //  find the admin to be updated by their Ids and update them
+      let updatedAdmin = await Administrator.findByIdAndUpdate(adminId, {
+        username,
+        email,
+        password,
+      });
+
+      // change the updatedAdmin to json
+      updatedAdmin = updatedAdmin.toJSON();
+
+      // we can't return the passwords of the admins
+      delete updatedAdmin.password;
+
+      // return the updated Admin and a a message.
+      return { ...updatedAdmin, message: "successfully updated" };
+    } catch (error) {
+      return {
+        message: "Failed to update admin",
+      };
+    }
+  },
 };
 
 export default AdminService;
