@@ -36,12 +36,9 @@ const StudentService = {
 
   getStudents: async () => {
     try {
-      const students = await Student.find({}).populate([
-        {
-          path: "marks",
-          select: "year term subject mark",
-        },
-      ]);
+      const students = await Student.find({})
+        .sort({ fullname: 1 })
+        .select("fullname class marks");
       return students;
     } catch (error) {
       return {
@@ -78,6 +75,24 @@ const StudentService = {
     delete student.password;
 
     return { ...student, token: token };
+  },
+
+  dashboard: async (studentId) => {
+    try {
+      const student = await Student.findOne({ _id: studentId })
+        .populate([
+          {
+            path: "marks",
+            select: "year term subject mark",
+          },
+        ])
+        .select("fullname class marks");
+      return student;
+    } catch (error) {
+      return {
+        message: error.message,
+      };
+    }
   },
 };
 
