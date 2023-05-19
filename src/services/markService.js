@@ -5,11 +5,10 @@ const MarkService = {
   createMark: async (markData) => {
     try {
       // initialise the markData
-      const { student, year, term, subject, mark } = markData;
+      const { student, year, term, subject } = markData;
 
       // check if the student is registered with the school
-      const exist = await Student.findOne({ studentNumber: student });
-      console.log(exist);
+      const exist = await Student.findOne({ _id: student });
       if (!exist) {
         return {
           message:

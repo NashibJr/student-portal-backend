@@ -7,6 +7,20 @@ const StudentController = {
       student: data,
     });
   },
+
+  getStudents: async (req, resp, next) => {
+    const data = await StudentService.getStudents();
+    return resp.status(201).json({
+      students: data,
+    });
+  },
+
+  login: async (req, resp, next) => {
+    const data = await StudentService.loginStudents(req.body);
+    return resp.status(200).json({
+      student: data,
+    });
+  },
 };
 
 export default StudentController;

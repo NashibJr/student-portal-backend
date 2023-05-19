@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const studentSchema = new Schema(
   {
-    studentNumber: {
+    _id: {
       type: Number,
       required: true,
     },
@@ -29,8 +29,17 @@ const studentSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+studentSchema.virtual("marks", {
+  ref: "Mark",
+  localField: "_id",
+  foreignField: "student",
+  justOne: false,
+});
 
 const Student = mongoose.model("Student", studentSchema);
 
