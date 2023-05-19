@@ -33,7 +33,6 @@ const AdminService = {
 
       return { ...rest, message: "successfully created Admin" };
     } catch (error) {
-      console.log(error);
       return {
         message: error.message,
       };
