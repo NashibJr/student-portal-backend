@@ -94,6 +94,26 @@ const StudentService = {
       };
     }
   },
+
+  deleteStudent: async (studentId) => {
+    try {
+      // check if the student exists
+      const exists = await Student.findById(studentId);
+      if (!exists) {
+        return {
+          message: "No such student",
+        };
+      }
+      await Student.findByIdAndDelete(studentId);
+      return {
+        message: "successfully deleted",
+      };
+    } catch (error) {
+      return {
+        message: error.message,
+      };
+    }
+  },
 };
 
 export default StudentService;

@@ -7,6 +7,7 @@ const studentRouter = Router();
 studentRouter.post("/students", StudentController.registerStudent);
 studentRouter.post("/students/login", StudentController.login);
 studentRouter.get("/students", StudentController.getStudents);
+studentRouter.delete("/students/:id", StudentController.deleteStudent);
 studentRouter.get(
   "/students/dashboard",
   authorization,

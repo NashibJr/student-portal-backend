@@ -11,7 +11,7 @@ const markSchema = new Schema({
     required: true,
   },
   term: {
-    type: String,
+    type: Number,
     required: true,
   },
   subject: {

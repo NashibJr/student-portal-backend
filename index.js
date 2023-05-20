@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import adminRouter from "./src/routers/adminRouter.js";
 import studentRouter from "./src/routers/studentRouter.js";
 import markRouter from "./src/routers/markRouter.js";
+import assessementRouter from "./src/routers/assessementRouter.js";
 
 config();
 const app = express();
@@ -16,7 +17,8 @@ const main = async () => {
         urlencoded({ extended: false }),
         adminRouter,
         studentRouter,
-        markRouter
+        markRouter,
+        assessementRouter
       );
       console.log("connected to the database");
     });

@@ -38,6 +38,14 @@ const StudentController = {
       });
     }
   },
+
+  deleteStudent: async (req, resp, next) => {
+    const { id } = req.params;
+    const data = await StudentService.deleteStudent(id);
+    return resp.status(201).json({
+      student: data,
+    });
+  },
 };
 
 export default StudentController;
