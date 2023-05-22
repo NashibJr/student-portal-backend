@@ -37,6 +37,7 @@ const StudentService = {
   getStudents: async () => {
     try {
       const students = await Student.find({})
+        .populate(["marks"])
         .sort({ fullname: 1 })
         .select("fullname class marks");
       return students;

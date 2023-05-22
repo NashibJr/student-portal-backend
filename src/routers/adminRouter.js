@@ -4,7 +4,7 @@ import AdminController from "../controllers/adminController.js";
 const adminRouter = Router();
 
 adminRouter.post("/admin", AdminController.registerAdmin);
-adminRouter.post("/admin", AdminController.registerAdmin);
+adminRouter.post("/admin/login", AdminController.login);
 adminRouter.delete("/admin/:id", AdminController.delete);
 adminRouter.put("/admin/:id", AdminController.updateAdmin);
 
