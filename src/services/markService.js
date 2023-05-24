@@ -31,6 +31,16 @@ const MarkService = {
       };
     }
   },
+
+  getMarks: async () => {
+    try {
+      return await Mark.find({}).sort({ year: 1, term: 1 });
+    } catch (error) {
+      return {
+        message: error.message,
+      };
+    }
+  },
 };
 
 export default MarkService;

@@ -25,12 +25,13 @@ const StudentService = {
       const { password, ...rest } = student;
       return {
         ...rest,
-        message: "student successfully created!!",
+        message: "student successfully registered!!",
       };
     } catch (error) {
       return {
         message: "An error has occured!!!!",
       };
+      console.log(error);
     }
   },
 
@@ -39,7 +40,7 @@ const StudentService = {
       const students = await Student.find({})
         .populate(["marks"])
         .sort({ fullname: 1 })
-        .select("fullname class marks");
+        .select("fullname _class marks house");
       return students;
     } catch (error) {
       return {

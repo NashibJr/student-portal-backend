@@ -35,6 +35,7 @@ const AssessmentService = {
       }
       let assessement = await Assessement.create({ year, term, results });
       assessement = assessement.toJSON();
+
       return {
         ...assessement,
         message: "successfully created the assessement",

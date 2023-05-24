@@ -37,6 +37,12 @@ const AdminController = {
       admin: data,
     });
   },
+  getAdmins: async (req, resp, next) => {
+    const data = await AdminService.getAdmins();
+    return resp.status(201).json({
+      admins: data,
+    });
+  },
 };
 
 export default AdminController;

@@ -48,7 +48,7 @@ const AdminService = {
     // if the admin doesnt exist, we let them know.
     if (!admin) {
       return {
-        message: "Admin not found, check your username amd try again",
+        message: "Admin not found, check your username and try again",
       };
     }
     // otherwise we check if they have provided the righ credentials.
@@ -59,7 +59,7 @@ const AdminService = {
     );
     if (!checkedAdmin) {
       return {
-        message: "Wrong password of username is submitted.",
+        message: "Wrong password is submitted.",
       };
     }
     // otherwise we generate a token for them.
@@ -71,7 +71,7 @@ const AdminService = {
     // remove the password
     delete admin.password;
     // return the checked admin and their tokens.
-    return { ...admin, token: token };
+    return { ...admin, token: token, message: "Successfylly logged in" };
   },
 
   // deleting administrators
@@ -113,6 +113,17 @@ const AdminService = {
     } catch (error) {
       return {
         message: "Failed to update admin",
+      };
+    }
+  },
+
+  getAdmins: async () => {
+    try {
+      const admins = await Administrator.find({}).select("username email");
+      return admins;
+    } catch (error) {
+      return {
+        message: error.message,
       };
     }
   },
