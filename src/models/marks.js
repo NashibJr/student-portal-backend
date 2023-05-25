@@ -14,6 +14,14 @@ const markSchema = new Schema({
     type: Number,
     required: true,
   },
+  studentName: {
+    type: String,
+    required: false,
+  },
+  _class: {
+    type: String,
+    required: false,
+  },
   subject: {
     type: String,
     required: true,

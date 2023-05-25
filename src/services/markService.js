@@ -22,7 +22,13 @@ const MarkService = {
       if (_mark) {
         return { message: "Mark for that subject already exists" };
       }
-      let mark__ = await Mark.create(markData);
+      // get the student's name.
+      const { fullname, _class } = exist;
+      let mark__ = await Mark.create({
+        ...markData,
+        studentName: fullname,
+        _class: _class,
+      });
       mark__ = mark__.toJSON();
       return { ...mark__, message: "Mark successfully added." };
     } catch (error) {
